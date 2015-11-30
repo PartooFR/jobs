@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="${request.locale_name}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="pyramid web application">
+    <meta name="author" content="Pylons Project">
+	<link rel="shortcut icon" href="${request.static_url('mamba:static/pyramid-16x16.png')}">
+     <title>Starter Scaffold for The Pyramid Web Framework</title>
+
+    <!-- Bootstrap -->
+	<link href="${request.static_url('mamba:static/bower_components/bootstrap/dist/css/bootstrap.min.css')}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Trello's Client API -->
+    <!--<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://api.trello.com/1/client.js?key=464961dc9bfdd33036f0131101b6d72d"></script>-->
+  </head>
+  <body>
+    <div class="container">
+      <p>Table listing the available boards, .json format displayed after.</p>            
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Desc</th>
+            <th>Cards</th>
+            <th>Lists</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr tal:repeat="item boards">
+            <td>${item.name}</td>
+            <td>${item.desc}</td>
+            <td><a href="${request.route_url('cards',board_id=item.id)}">Get Here</a></td>
+            <td><a href="${request.route_url('lists',board_id=item.id)}">Get Here</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <code>${boards}</code>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="${request.static_url('mamba:static/bower_components/jquery/dist/jquery.min.js')}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="${request.static_url('mamba:static/bower_components/bootstrap/dist/js/bootstrap.min.js')}"></script>
+  </body>
+</html>
