@@ -26,14 +26,14 @@
   <body>
     <div class="container">
       <h1>${title}</h1>
-      <form role="form">
+      <a href="https://trello.com/1/authorize?key=464961dc9bfdd33036f0131101b6d72d&name=applicationname&expiration=never&response_type=token">Authorize</a>
+      <form role="form" name="usernameForm" action="/" method="get">
         <div class="form-group">
           <label for="token">Token:</label>
-          <input type="submit" class="form-control" name="form.edit" placeholder="Provide a token">
+          <input type="text" class="form-control" name="token" placeholder="trello" required>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" name='form.submitted' value="Save" class="btn btn-primary">Submit</button>
       </form>
-      <a href="https://trello.com/1/authorize?key=464961dc9bfdd33036f0131101b6d72d&name=applicationname&expiration=never&response_type=token">Connect To Trello</a>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
