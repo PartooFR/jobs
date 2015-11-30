@@ -13,6 +13,6 @@ def main(global_config, **settings):
     config.add_route('lists', '/board/lists/{board_id}')
     config.add_route('cards', '/board/cards/{board_id}')
     config.add_route('authenticate', '/auth')
-    config.add_route('myboard','/myboard')
+    config.add_route('myboard','/myboard/{token}')
     config.scan()
     return config.make_wsgi_app()

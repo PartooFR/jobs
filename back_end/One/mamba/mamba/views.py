@@ -45,11 +45,11 @@ def authenticate(request):
         return HTTPFound(location=request.route_url('myboard', token=token))
     return {'title': 'Authenticate', 'token': ''}
     
-@view_config(route_name='myboard', renderer='templates/boards.pt')
+@view_config(route_name='myboard', renderer='templates/myboards.pt')
 def myboard(request):
     token =  request.matchdict['token']
     url =  urlApi+'/1/members/me?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key='+appKey+'&token='+token
     response_dict = requests.get(url).json()
-    return {'boards': response_dict}
+    return {'myboards': response_dict}
 
     

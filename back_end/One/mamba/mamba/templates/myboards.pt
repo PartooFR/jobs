@@ -41,15 +41,26 @@
       </div>
     </nav>
     <div class="container">
-      <h1>${title}</h1>
-      <form role="form" name="usernameForm" action="/" method="get">
-        <div class="form-group">
-          <label for="token">Username:</label>
-          <input type="text" class="form-control" name="text" value="trello" placeholder="trello" required>
-        </div>
-        <button type="submit" name='form.submitted' value="Save" class="btn btn-primary">Submit</button>
-        <!--<a href="${request.route_url('boards',username=text)}">Get</a>-->
-      </form>
+      <p>Table listing the available boards, .json format displayed after.</p>            
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Id</th>
+            <th>Cards</th>
+            <th>Lists</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr tal:repeat="item myboards.boards">
+            <td>${item.name}</td>
+            <td>${item.id}</td>
+            <td><a href="${request.route_url('cards',board_id=item.id)}">Get Here</a></td>
+            <td><a href="${request.route_url('lists',board_id=item.id)}">Get Here</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <code>${myboards}</code>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${request.static_url('mamba:static/bower_components/jquery/dist/jquery.min.js')}"></script>
