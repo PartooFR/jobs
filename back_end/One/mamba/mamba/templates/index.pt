@@ -26,12 +26,13 @@
   <body>
     <div class="container">
       <h1>${title}</h1>
-      <form role="form" action="/" method="get">
+      <form role="form" name="usernameForm" action="/" method="get">
         <div class="form-group">
           <label for="token">Username:</label>
-          <input type="text" class="form-control" name='text' placeholder="trello">
+          <input type="text" class="form-control" name="text" value="trello" placeholder="trello" required>
         </div>
-        <a href="${request.route_url('boards',username=text)}">Get</a>
+        <button type="submit" name='form.submitted' value="Save" class="btn btn-primary">Submit</button>
+        <!--<a href="${request.route_url('boards',username=text)}">Get</a>-->
       </form>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -1,6 +1,7 @@
 from pyramid.view import view_config
 from pyramid.response import Response
 import requests
+from pyramid.httpexceptions import HTTPFound
 
 urlApi = 'https://api.trello.com'
 
@@ -11,8 +12,8 @@ def my_view(request):
 @view_config(route_name='index', renderer='templates/index.pt')
 def index(request):
     if 'form.submitted' in request.params:
-        name= request.params['username']
-        return {'title': 'Mamba to Trello', 'text':request.form['text']}
+        name= request.params['text']
+        return HTTPFound(location=request.route_url('boards', username=name))
     return {'title': 'Mamba to Trello', 'text':'trello'}
     
 @view_config(route_name='authenticate', renderer='templates/authenticate.pt')
