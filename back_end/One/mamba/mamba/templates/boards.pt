@@ -30,7 +30,7 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Desc</th>
+            <th>Url</th>
             <th>Cards</th>
             <th>Lists</th>
           </tr>
@@ -38,7 +38,7 @@
         <tbody>
           <tr tal:repeat="item boards">
             <td>${item.name}</td>
-            <td>${item.desc}</td>
+            <td>${item.shortUrl}</td>
             <td><a href="${request.route_url('cards',board_id=item.id)}">Get Here</a></td>
             <td><a href="${request.route_url('lists',board_id=item.id)}">Get Here</a></td>
           </tr>

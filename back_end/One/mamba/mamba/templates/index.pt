@@ -24,8 +24,16 @@
     <script src="https://api.trello.com/1/client.js?key=464961dc9bfdd33036f0131101b6d72d"></script>-->
   </head>
   <body>
-    <h1>${title}</h1>
-
+    <div class="container">
+      <h1>${title}</h1>
+      <form role="form" action="/" method="get">
+        <div class="form-group">
+          <label for="token">Username:</label>
+          <input type="text" class="form-control" name='text' placeholder="trello">
+        </div>
+        <a href="${request.route_url('boards',username=text)}">Get</a>
+      </form>
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${request.static_url('mamba:static/bower_components/jquery/dist/jquery.min.js')}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
