@@ -9,6 +9,13 @@ The docs are detailed here :
 * [Trello] (https://developers.trello.com/apis)
 
 
+## Requirements
+This apps requires:
+* Python 3.5
+* Pyramid 1.5 
+
+It would be useful to have a dependecy manager like pip for python modules, but not required.
+Bower is needed to install some components , i.e bootstrap...
 ## Setup
 
 First
@@ -26,9 +33,9 @@ You're ready to try now after this last line
 $VENV/bin/pserve development.ini
 ```
 
-# Database
+## Database
 No database required
 
-# Overall architecture
+## Overall architecture
 
-*Under construction
+*Under construction*
