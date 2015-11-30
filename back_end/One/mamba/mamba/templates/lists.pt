@@ -26,7 +26,7 @@
   <body>
     <div class="container">
       
-      <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
+      <p>Likewise, the .json format is displayed after the table</p>            
       <table class="table">
         <thead>
           <tr>

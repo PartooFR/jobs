@@ -25,7 +25,7 @@
   </head>
   <body>
     <div class="container">
-      <p>Likewise, the .json format is displayed under</p>            
+      <p>Likewise, the .json format is displayed after the table</p>            
       <table class="table">
         <thead>
           <tr>
