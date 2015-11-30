@@ -34,6 +34,9 @@
             <li class="active"><a href="${request.route_url('index')}">Username</a></li>
             <li><a href="${request.route_url('authenticate')}">Token</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="${request.route_url('home')}"><span class="glyphicon glyphicon-user"></span> Powered by Pyramid</a></li>
+          </ul>
         </div>
       </div>
     </nav>

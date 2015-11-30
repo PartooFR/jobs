@@ -24,19 +24,6 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="${request.route_url('index')}">Mamba</a>
-        </div>
-        <div>
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="${request.route_url('index')}">Username</a></li>
-            <li><a href="${request.route_url('authenticate')}">Token</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
     <div class="starter-template">
       <div class="container">
         <div class="row">
