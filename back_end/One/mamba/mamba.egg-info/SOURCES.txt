@@ -134,4 +134,5 @@ mamba/templates/boards.pt
 mamba/templates/cards.pt
 mamba/templates/index.pt
 mamba/templates/lists.pt
+mamba/templates/myboards.pt
 mamba/templates/mytemplate.pt
