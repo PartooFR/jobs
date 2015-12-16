@@ -1,7 +1,7 @@
 #Mamba
 
-I'm *still* working on this Pyramid application. Basically, it is meants to display user's boards, cards or lists using Trello API.
-Given that I started learning how to use Pyramid less than a week ago, this pretty basic. For what I can tell, there is still room for improvment.
+This App was my first trial with Pyramid Framework. Basically, it is meant to display user's boards, cards or lists using Trello API.
+Given that I started learning how to use Pyramid less than a week ago, this is pretty basic. For what I can tell, there is still room for improvment.
 
 
 The docs are detailed here : 
@@ -14,7 +14,7 @@ This apps requires:
 * Python 3.5
 * Pyramid 1.5 
 
-It would be useful to have a dependecy manager like pip for python modules, but not required.
+It would be useful to have a dependency manager like pip for python modules, but not required.
 Bower is needed to install some components , i.e bootstrap...
 ## Setup
 
@@ -50,7 +50,7 @@ In few words, the Pyramid app has 6 views:
 * cards and lists refer to cards and lists found on trello 
 * myboard is meant to show specific boards of a given user.
 
-For detailled information, refer to views.py.
+For detailled information, please refer to views.py.
 
 ## Improvement
 
