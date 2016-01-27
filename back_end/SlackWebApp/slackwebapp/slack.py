@@ -4,11 +4,12 @@ CONNECTION_OK = 0
 CONNECTION_ERROR = 1
 CHANNEL_ERROR = 2
 
+base_token = 'xoxp-19294308839-19294044322-19401435232-79ca3b42fa'
 
 class SlackAPI:
     
     def __init__(self):
-        self.slack = Slacker('xoxp-19294308839-19294044322-19401435232-79ca3b42fa')
+        self.slack = Slacker(base_token)
 
         # Dict of existing channels {'name': 'id'}
         self.channels_ids = {}
@@ -69,22 +70,48 @@ class SlackAPI:
         else:
             return self.channels_ids.keys()
 
-    def parse_messages(self, content):
-        # return only messages, no events
+    def parse_messages(self, content, subtype=True):
+        # if not subtype return only messages not events (like joining)
         messages = []
         for mess in content:
             if mess['type'] != 'message':
                 print('not a message')
                 continue
-            if 'subtype' not in mess :
+            #if 'subtype' not in mess :
+            if subtype or 'subtype' not in mess:
                 mess['author'] = self.users_names[mess['user']]
-                #mess['timestamp'] = datetime.fromtimestamp(
-                 #       int(mess['ts'])).strftime('%Y-%m-%d %H:%M:%S')
+                mess['timestamp'] = datetime.fromtimestamp(
+                        float(mess['ts'])).strftime('%Y-%m-%d %H:%M:%S')
                 messages.append(mess)
 
-        
         return messages
 
+    def messages_count(self, channel_name):
+        # get number of messages on a channel
+        chan_id = self.get_channel_id(channel_name)
+
+        if not chan_id:
+            return CHANNEL_ERROR
+        elif chan_id is CONNECTION_ERROR:
+            return chan_id
+        else:
+            raw_messages = self.slack.channels.history(chan_id)
+            if not raw_messages.body['ok']:
+                return CONNECTION_ERROR
+          
+            return len(self.parse_messages(raw_messages.body['messages'], False))
+
+    def all_messages_count(self):
+        count = {}
+        channels = self.list_channels()
+        
+        if isinstance(channels, type(CONNECTION_ERROR)):
+            return channels
+
+        for chan in channels:
+            count[chan] = self.messages_count(chan)
+
+        return count
 
     def get_messages(self, channel_name):
         # get all messages from a channel

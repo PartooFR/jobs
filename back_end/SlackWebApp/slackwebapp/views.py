@@ -9,5 +9,12 @@ def home_view(request):
 
 @view_config(route_name='channels', renderer='templates/channels.pt')
 def channels_view(request):
-    return {'channels': slack.list_channels()}
+    return {'channels': slack.list_channels(),
+            'count': slack.all_messages_count()}
 
+@view_config(route_name='messages', renderer='templates/messages.pt')
+def messages_view(request):
+    channel = request.matchdict['channel'] 
+    return {'channel': channel,
+            'history': slack.get_messages(channel) 
+            }

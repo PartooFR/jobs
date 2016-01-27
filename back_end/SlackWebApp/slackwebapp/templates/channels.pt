@@ -46,14 +46,16 @@
                     <table class="table table-striped table-bordered" style="width:75%" align=center>
                         <thead align="center">
                             <th>Channel name</th>
+                            <th> Message count</th>
                             <th>History</th>
                             <th>Backup</th>
                         </thead>
                         <tr tal:repeat="chan channels" align="center">
                             <td>${chan}</td>
-                            <td><a class="btn btn-primary" href='messages/${chan}'>
+                            <td>${count[chan]}
+                            <td><a class="btn btn-primary" href="${request.route_url('messages', channel=chan)}">
                                 Go</a></td>
-                            <td><a class="btn btn-success" href='backup/${chan}'>
+                            <td><a class="btn btn-success" href="${request.route_url('home')}">
                                 Go</a></td>
                         </tr>
                     </table>
