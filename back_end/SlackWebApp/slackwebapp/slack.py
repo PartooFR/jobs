@@ -1,4 +1,4 @@
-from slacker import Slacker
+from slacker import Slacker, Error as Sl_Error
 from datetime import datetime
 CONNECTION_OK = 0
 CONNECTION_ERROR = 1
@@ -6,10 +6,18 @@ CHANNEL_ERROR = 2
 
 base_token = 'xoxp-19294308839-19294044322-19401435232-79ca3b42fa'
 
+def is_valid_token(token):
+    sl = Slacker(token)
+    try:
+        sl.auth.test()
+    except Sl_Error as e:
+        return e
+    return CONNECTION_OK
+
 class SlackAPI:
     
-    def __init__(self):
-        self.slack = Slacker(base_token)
+    def __init__(self, token=base_token):
+        self.slack = Slacker(token)
 
         # Dict of existing channels {'name': 'id'}
         self.channels_ids = {}
@@ -68,7 +76,7 @@ class SlackAPI:
         if rl is not CONNECTION_OK:
             return rl
         else:
-            return self.channels_ids.keys()
+            return sorted(self.channels_ids.keys())
 
     def parse_messages(self, content):
         # if not subtype return only messages not events (like joining)

@@ -1,12 +1,26 @@
 from pyramid.view import view_config
-from .slack import SlackAPI
+from .slack import SlackAPI, is_valid_token, CONNECTION_OK
 from .mongo import all_messages, save_messages, delete_messages
 
 slack = SlackAPI()
 
 @view_config(route_name='home', renderer='templates/home.pt')
 def home_view(request):
-    return {'project': 'SlackWebApp'}
+    global slack
+
+    action = 'none'
+    if 'token' in request.params and request.params['token'] != '':
+        token = request.params['token']
+
+        valid = is_valid_token(token)
+        if valid == CONNECTION_OK:
+            slack = SlackAPI(token)
+            action= 'changed'
+        else:
+            action = valid            
+
+    return {'project': 'SlackWebApp',
+            'action': action}
 
 @view_config(route_name='channels', renderer='templates/channels.pt')
 def channels_view(request):
