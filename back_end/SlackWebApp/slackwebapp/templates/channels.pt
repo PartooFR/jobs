@@ -8,6 +8,7 @@
         <meta name="author" content="Anna Dao">
         <link rel="shortcut icon" href="${request.static_url('slackwebapp:static/slack-16x16.png')}">
 
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
         <!-- Bootstrap -->
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -55,7 +56,7 @@
                             <td>${count[chan]}
                             <td><a class="btn btn-primary" href="${request.route_url('messages', channel=chan)}">
                                 Go</a></td>
-                            <td><a class="btn btn-success" href="${request.route_url('home')}">
+                            <td><a class="btn btn-success" href="${request.route_url('backup', channel=chan)}">
                                 Go</a></td>
                         </tr>
                     </table>

@@ -70,19 +70,21 @@ class SlackAPI:
         else:
             return self.channels_ids.keys()
 
-    def parse_messages(self, content, subtype=True):
+    def parse_messages(self, content):
         # if not subtype return only messages not events (like joining)
         messages = []
         for mess in content:
             if mess['type'] != 'message':
-                print('not a message')
                 continue
-            #if 'subtype' not in mess :
-            if subtype or 'subtype' not in mess:
+            
+            if 'user' in mess:
                 mess['author'] = self.users_names[mess['user']]
-                mess['timestamp'] = datetime.fromtimestamp(
+            else:
+                mess['author'] = 'slack'
+
+            mess['timestamp'] = datetime.fromtimestamp(
                         float(mess['ts'])).strftime('%Y-%m-%d %H:%M:%S')
-                messages.append(mess)
+            messages.append(mess)
 
         return messages
 
@@ -99,7 +101,7 @@ class SlackAPI:
             if not raw_messages.body['ok']:
                 return CONNECTION_ERROR
           
-            return len(self.parse_messages(raw_messages.body['messages'], False))
+            return len(self.parse_messages(raw_messages.body['messages']))
 
     def all_messages_count(self):
         count = {}
