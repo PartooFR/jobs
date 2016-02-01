@@ -25,8 +25,19 @@ class SlackAPI:
         # Dict of existing users {'id': 'name'}
         self.users_names = {}
 
+        # Team name
+        self.name = None
+
+        self.init_team_name() 
         self.get_channels()
         self.get_users()
+
+    def get_name(self):
+        return self.name
+
+    def init_team_name(self):
+        nm = self.slack.team.info()
+        self.name = nm.body['team']['name']
 
     def get_channels(self):
         # Fill self.channels_ids with all existing channels

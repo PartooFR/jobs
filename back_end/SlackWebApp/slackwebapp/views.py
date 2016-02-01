@@ -3,10 +3,12 @@ from .slack import SlackAPI, is_valid_token, CONNECTION_OK
 from .mongo import all_messages, save_messages, delete_messages
 
 slack = SlackAPI()
+name = slack.get_name()
 
 @view_config(route_name='home', renderer='templates/home.pt')
 def home_view(request):
     global slack
+    global name
 
     action = 'none'
     if 'token' in request.params and request.params['token'] != '':
@@ -15,6 +17,7 @@ def home_view(request):
         valid = is_valid_token(token)
         if valid == CONNECTION_OK:
             slack = SlackAPI(token)
+            name = slack.get_name()
             action= 'changed'
         else:
             action = valid            
@@ -37,7 +40,8 @@ def messages_view(request):
 @view_config(route_name='backup', request_method='GET', renderer='templates/backup.pt')
 def backup_view(request):
     channel = request.matchdict['channel']
-    saved_messages = request.db[channel].find()
+    co = name+'.'+channel
+    saved_messages = request.db[co].find()
     return {'title': 'BACKUP',
             'channel': channel,
             'messages': all_messages(saved_messages, 
@@ -47,8 +51,9 @@ def backup_view(request):
 @view_config(route_name='backup', request_method='POST', renderer='templates/backup.pt')
 def submitted_view(request):
     channel = request.matchdict['channel']
+    co = name+'.'+channel
     selected = request.params.getall('selected_messages')
-    collection = request.db[channel]
+    collection = request.db[co]
     action = 'none'
     
     if 'form.save' in request.params:
