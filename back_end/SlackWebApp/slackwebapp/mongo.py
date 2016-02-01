@@ -15,7 +15,7 @@ def all_messages(mongo_mess, slack_mess):
     return list(reversed(sorted(ret, key=lambda msg: msg['ts'])))
 
 def save_messages(collection, messages):
-    saved = False
+    saved = True 
 
     # No messages
     if not messages:
@@ -23,15 +23,19 @@ def save_messages(collection, messages):
     
     if isinstance(messages, list):
         for m in messages:
+            if 'ObjectId' in m:
+                m = remove_id(m)
             m = eval(m)
             if m['color'] == 'danger':
                 del m['color']
-                saved = collection.save(m)
+                s = collection.insert_one(m)
+                if not s.inserted_id:
+                    saved = False
 
     return saved
 
 def delete_messages(collection, messages):
-    deleted = False
+    deleted = 0
 
     if not messages:
         return deleted
@@ -43,16 +47,19 @@ def delete_messages(collection, messages):
             m = eval(m)
             if m['color'] == 'success':
                 del m['color']
-                deleted = collection.remove(m)
+                d = collection.delete_one(m)
+                deleted += d.deleted_count
 
-    return deleted
+    return deleted == len(messages)
 
 def remove_id(dict_string):
     tab = dict_string.split(',')
     if '_id' in tab[0]:
         tab[1] = "{"+tab[1]
+        del tab[0]
     elif '_id' in tab[-1]:
         tab[-2] = tab[-2]+"}"
+        del tab[-1]
     else:
         tbr = None
         for i in range(1, len(tab)-1):

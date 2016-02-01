@@ -84,12 +84,14 @@ class SlackAPI:
         for mess in content:
             if mess['type'] != 'message':
                 continue
+
+            if 'subtype' in mess:
+                continue
             
             if 'user' in mess:
                 mess['author'] = self.users_names[mess['user']]
             else:
                 mess['author'] = 'slack'
-
             mess['timestamp'] = datetime.fromtimestamp(
                         float(mess['ts'])).strftime('%Y-%m-%d %H:%M:%S')
             messages.append(mess)
