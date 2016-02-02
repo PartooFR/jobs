@@ -42,8 +42,7 @@ def backup_view(request):
     channel = request.matchdict['channel']
     co = name+'.'+channel
     saved_messages = request.db[co].find()
-    return {'title': 'BACKUP',
-            'channel': channel,
+    return {'channel': channel,
             'messages': all_messages(saved_messages, 
                 slack.get_messages(channel)),
             }
@@ -62,8 +61,7 @@ def submitted_view(request):
     elif 'form.delete' in request.params:
         if delete_messages(collection, selected):
             action = 'deleted'
-    return {'title': 'SAVED',
-            'channel': channel,
+    return {'channel': channel,
             'messages': all_messages(collection.find({}, {'_id':None}), slack.get_messages(channel)),
             'action': action 
             }

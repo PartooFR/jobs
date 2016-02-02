@@ -7,12 +7,18 @@ CHANNEL_ERROR = 2
 base_token = 'xoxp-19294308839-19294044322-19401435232-79ca3b42fa'
 
 def is_valid_token(token):
+    # check connection with token
+    # return: Occured error or CONNECTION_OK
+    # token: string (slack token)
+
     sl = Slacker(token)
     try:
         sl.auth.test()
     except Sl_Error as e:
         return e
     return CONNECTION_OK
+
+
 
 class SlackAPI:
     
@@ -28,20 +34,25 @@ class SlackAPI:
         # Team name
         self.name = None
 
+        # init channels_ids, users_name and name fields
         self.init_team_name() 
         self.get_channels()
         self.get_users()
 
+
     def get_name(self):
         return self.name
 
+
     def init_team_name(self):
+        # Set self.name at team name
         nm = self.slack.team.info()
         self.name = nm.body['team']['name']
 
+
     def get_channels(self):
         # Fill self.channels_ids with all existing channels
-        #   return CONNECTION_ERROR if can't connect to slack API
+        # return: CONNECTION_ERROR if can't connect to slack API
         slack_list = self.slack.channels.list()
 
         if not slack_list.body['ok']:
@@ -51,9 +62,10 @@ class SlackAPI:
             self.channels_ids[chan['name']] = chan['id']
         return CONNECTION_OK
         
+
     def get_users(self):
         # Fill self.users_ids with all existing users
-        #   return CONNECTION_ERROR if can't connect to slack API
+        # return: CONNECTION_ERROR if can't connect to slack API
         slack_list = self.slack.users.list()
 
         if not slack_list.body['ok']:
@@ -63,8 +75,11 @@ class SlackAPI:
             self.users_names[user['id']] = user['name']
         return CONNECTION_OK
     
+
     def get_channel_id(self, channel_name):
-        # return id for channel name passed as argument
+        # Find id for channel_name
+        # return: Spread error or CONNECTION_OK
+        # channel_name: string
         if channel_name in self.channels_ids.keys():
             return self.channels_ids[channel_name]
 
@@ -81,7 +96,8 @@ class SlackAPI:
                 return None
 
     def list_channels(self):
-        # list all existing channels
+        # List all existing channels
+        # return: Spread error or channels list
         rl = self.get_channels()
 
         if rl is not CONNECTION_OK:
@@ -90,7 +106,12 @@ class SlackAPI:
             return sorted(self.channels_ids.keys())
 
     def parse_messages(self, content):
-        # if not subtype return only messages not events (like joining)
+        # For all messages in content check 
+        #   if type is message and there is no subtype
+        #   add author and timestamp fields
+        # return: list of edited dict
+        # content: list of dict
+
         messages = []
         for mess in content:
             if mess['type'] != 'message':
@@ -110,7 +131,9 @@ class SlackAPI:
         return messages
 
     def messages_count(self, channel_name):
-        # get number of messages on a channel
+        # Get the number of messages on a channel
+        # return: int 
+        # channel_name: string
         chan_id = self.get_channel_id(channel_name)
 
         if not chan_id:
@@ -125,6 +148,8 @@ class SlackAPI:
             return len(self.parse_messages(raw_messages.body['messages']))
 
     def all_messages_count(self):
+        # Get the number of messages for all channels
+        # return: dict{ string: int }
         count = {}
         channels = self.list_channels()
         
@@ -137,7 +162,9 @@ class SlackAPI:
         return count
 
     def get_messages(self, channel_name):
-        # get all messages from a channel
+        # Get messages on a channel
+        # return: list of dict
+        # channel_name: string
         chan_id = self.get_channel_id(channel_name)
 
         if not chan_id:
