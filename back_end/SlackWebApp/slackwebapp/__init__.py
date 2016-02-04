@@ -1,7 +1,12 @@
 from pyramid.config import Configurator
-from urllib.parse import urlparse
 from pymongo import MongoClient
 
+try:
+    # for python 2
+    from urlparse import urlparse
+except ImportError:
+    # for python 3
+    from urllib.parse import urlparse
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.

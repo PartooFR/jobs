@@ -13,6 +13,8 @@ requires = [
     'pyramid_chameleon',
     'pyramid_debugtoolbar',
     'waitress',
+    'pymongo',
+    'slacker',
     ]
 
 setup(name='SlackWebApp',
